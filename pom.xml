@@ -135,9 +135,9 @@
                 <configuration>
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:5432/testdatabase</url>
-                        <user>testuser</user>
-                        <password>qwerty</password>
+                        <url>jdbc:postgresql://localhost:5432/psychotech</url>
+                        <user>overlord</user>
+                        <password>J1sZ5yy</password>
                     </jdbc>
                     <generator>
                         <database>
