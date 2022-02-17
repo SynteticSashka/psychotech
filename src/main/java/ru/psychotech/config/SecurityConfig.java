@@ -21,13 +21,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/").hasRole("ADMIN")
                 .antMatchers("/", "/registration").permitAll()
                 .anyRequest().authenticated())
-        .formLogin()
-        .loginPage("/login")
-        .permitAll()
+            .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .successHandler(new DefaultAuthenticationSuccessHandler())
         .and()
-        .logout()
-        .permitAll()
-        .logoutSuccessUrl("/");
+            .logout()
+            .permitAll()
+            .logoutSuccessUrl("/");
 
   }
   // @formatter:on

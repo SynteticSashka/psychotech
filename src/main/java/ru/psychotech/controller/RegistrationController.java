@@ -95,7 +95,7 @@ public class RegistrationController {
 
     Client client = new Client(1L, name, lastname, email, password, Role.ROLE_USER);
 
-    if (clientRepository.create(client) == -1L){ // если пользователь уже существует
+    if (clientRepository.create(client).isEmpty()) { // если пользователь уже существует
       model.addAttribute("emailAlreadyExistError", "Пользователь с таким именем уже существует");
       model.addAttribute("hasError", true);
       return "registration";

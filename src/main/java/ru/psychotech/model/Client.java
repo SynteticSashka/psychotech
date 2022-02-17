@@ -24,7 +24,6 @@ public class Client implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    // необходимо только вернуть имя роли
     return Collections.singletonList(()-> role.toString());
   }
 

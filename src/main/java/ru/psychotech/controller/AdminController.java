@@ -1,5 +1,6 @@
 package ru.psychotech.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import ru.psychotech.model.Client;
 import ru.psychotech.model.Role;
 import ru.psychotech.repository.ClientRepository;
+import ru.psychotech.service.ClientService;
+
+import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-
-  @Autowired
-  ClientRepository clientRepository;
+  private final ClientService service;
+  private final ClientRepository repository;
 
   Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -30,13 +34,13 @@ public class AdminController {
         model.addAttribute("id",((Client) userDetails).getId());
       }
     }
-    model.addAttribute("clients", clientRepository.getList());
+    model.addAttribute("clients", service.getClients());
     return "admin";
   }
 
   @GetMapping("/edit/{id}")
   public String editForm(Model model, @PathVariable Long id) {
-    var client = clientRepository.get(id);
+    var client = Optional.ofNullable(service.getClient(id));
     if (client.isPresent()) {
       model.addAttribute(client);
     }
@@ -71,13 +75,13 @@ public class AdminController {
       return "registration";
     }
 
-    var optionalClient = clientRepository.get(id);
+    var optionalClient = repository.get(id);
     if (optionalClient.isPresent()) {
       var client = optionalClient.get();
       client.setName(name);
       client.setLastname(lastname);
       client.setRole(Role.valueOf(role));
-      clientRepository.update(client);
+      repository.update(client);
     }
 
     return "redirect:/admin/";
@@ -85,7 +89,7 @@ public class AdminController {
 
   @PostMapping("/remove")
   public String remove(@RequestParam Long id) {
-    clientRepository.delete(id);
+    service.delete(id);
     return "redirect:/admin/";
   }
 }

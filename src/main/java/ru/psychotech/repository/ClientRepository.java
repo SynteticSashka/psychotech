@@ -3,16 +3,12 @@ package ru.psychotech.repository;
 import static jooq_generated.tables.Clients.CLIENTS;
 
 import lombok.RequiredArgsConstructor;
-import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.jooq.exception.DataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.psychotech.model.Client;
-
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -62,13 +58,12 @@ public class ClientRepository {
         .orElseThrow(() -> new UsernameNotFoundException("User"));
   }
 
-  public Long create(Client client) {
-    // перед добавляем проверяем, нет ли пользователя с такой почтой
+  public Optional<Client> create(Client client) {
     boolean isExist = dslContext.selectFrom(CLIENTS)
         .where(CLIENTS.EMAIL.eq(client.getEmail()))
         .fetchOptional().map(r -> r.into(Client.class)).isPresent();
 
-    if (isExist) return -1L;
+    if (isExist) return Optional.empty();
 
     client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
 
@@ -86,8 +81,7 @@ public class ClientRepository {
             client.getPassword())
         .returning(CLIENTS.ID)
         .fetchOptional()
-        .orElseThrow(() -> new DataAccessException("Error inserting entity: " + client.getId()))
-        .get(CLIENTS.ID);
+        .map(r -> r.into(Client.class));
   }
 
   public void delete(Long id) {
