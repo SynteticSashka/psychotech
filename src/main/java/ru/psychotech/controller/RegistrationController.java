@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.psychotech.model.Client;
+import ru.psychotech.model.NewClient;
 import ru.psychotech.model.Role;
 import ru.psychotech.repository.ClientRepository;
 
@@ -93,7 +94,7 @@ public class RegistrationController {
       return "registration";
     }
 
-    Client client = new Client(1L, name, lastname, email, password, Role.ROLE_USER);
+    var client = new NewClient(name, lastname, email, password);
 
     if (clientRepository.create(client).isEmpty()) { // если пользователь уже существует
       model.addAttribute("emailAlreadyExistError", "Пользователь с таким именем уже существует");

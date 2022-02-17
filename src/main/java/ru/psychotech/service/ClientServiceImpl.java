@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.psychotech.mapper.ClientDtoMapper;
 import ru.psychotech.model.Client;
 import ru.psychotech.model.ClientDto;
+import ru.psychotech.model.NewClient;
 import ru.psychotech.repository.ClientRepository;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class ClientServiceImpl implements ClientService{
   }
 
   @Override
-  public ClientDto create(Client client) {
+  public ClientDto create(NewClient client) {
     return repository.create(client)
         .map(mapper::mapClientToDto)
         .orElse(null);

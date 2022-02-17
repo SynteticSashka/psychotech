@@ -13,6 +13,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+        .cors().disable()
+        .csrf().disable();
+
+    http
         .authorizeRequests((authorize) ->
             authorize
                 .antMatchers("/css/**").permitAll()
@@ -24,12 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
             .loginPage("/login")
             .permitAll()
-            .successHandler(new DefaultAuthenticationSuccessHandler())
+//            .successHandler(new DefaultAuthenticationSuccessHandler())
         .and()
             .logout()
             .permitAll()
             .logoutSuccessUrl("/");
-
   }
   // @formatter:on
 

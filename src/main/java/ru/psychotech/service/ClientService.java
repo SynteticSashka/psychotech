@@ -2,6 +2,7 @@ package ru.psychotech.service;
 
 import ru.psychotech.model.Client;
 import ru.psychotech.model.ClientDto;
+import ru.psychotech.model.NewClient;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ClientService {
 
   ClientDto getClient(Long id);
 
-  ClientDto create(Client client);
+  ClientDto create(NewClient client);
 
   ClientDto update(Client client);
 

@@ -21,7 +21,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-  private final ClientService service;
   private final ClientRepository repository;
 
   Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -34,16 +33,16 @@ public class AdminController {
         model.addAttribute("id",((Client) userDetails).getId());
       }
     }
-    model.addAttribute("clients", service.getClients());
+    model.addAttribute("clients", repository.getList());
     return "admin";
   }
 
   @GetMapping("/edit/{id}")
   public String editForm(Model model, @PathVariable Long id) {
-    var client = Optional.ofNullable(service.getClient(id));
-    if (client.isPresent()) {
-      model.addAttribute(client);
-    }
+    var client = repository.get(id).get();
+
+    model.addAttribute(client);
+
     return "editForm";
   }
 
@@ -89,7 +88,7 @@ public class AdminController {
 
   @PostMapping("/remove")
   public String remove(@RequestParam Long id) {
-    service.delete(id);
+    repository.delete(id);
     return "redirect:/admin/";
   }
 }

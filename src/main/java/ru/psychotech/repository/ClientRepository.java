@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.psychotech.model.Client;
+import ru.psychotech.model.NewClient;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -58,9 +60,12 @@ public class ClientRepository {
         .orElseThrow(() -> new UsernameNotFoundException("User"));
   }
 
-  public Optional<Client> create(Client client) {
+  public Optional<Client> create(NewClient client) {
     boolean isExist = dslContext.selectFrom(CLIENTS)
-        .where(CLIENTS.EMAIL.eq(client.getEmail()))
+        .where(
+            CLIENTS.EMAIL.eq(client.getEmail()),
+            CLIENTS.DELETED.eq(false)
+            )
         .fetchOptional().map(r -> r.into(Client.class)).isPresent();
 
     if (isExist) return Optional.empty();
@@ -79,7 +84,7 @@ public class ClientRepository {
             client.getLastname(),
             client.getEmail(),
             client.getPassword())
-        .returning(CLIENTS.ID)
+        .returning()
         .fetchOptional()
         .map(r -> r.into(Client.class));
   }
@@ -90,5 +95,4 @@ public class ClientRepository {
         .where(CLIENTS.ID.eq(id))
         .execute();
   }
-
 }
