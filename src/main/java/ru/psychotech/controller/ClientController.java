@@ -51,7 +51,8 @@ public class ClientController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ClientDto> updateClient(@PathVariable Long id, @RequestBody EditClient client) {
+  public ResponseEntity<ClientDto> updateClient(@PathVariable Long id,
+                                                @RequestBody EditClient client) {
     var updated = clientService.update(id, client);
     if (updated != null) {
       return ResponseEntity.ok().body(updated);
