@@ -1,4 +1,4 @@
-package ru.psychotech.model;
+package ru.psychotech.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,7 +3,6 @@ package ru.psychotech.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.psychotech.model.Client;
-import ru.psychotech.model.NewClient;
-import ru.psychotech.model.Role;
+import ru.psychotech.model.dto.NewClient;
 import ru.psychotech.repository.ClientRepository;
 
 import java.util.regex.Pattern;

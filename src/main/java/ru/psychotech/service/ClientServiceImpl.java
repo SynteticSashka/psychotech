@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.psychotech.mapper.ClientDtoMapper;
 import ru.psychotech.model.Client;
-import ru.psychotech.model.ClientDto;
-import ru.psychotech.model.NewClient;
+import ru.psychotech.model.dto.ClientDto;
+import ru.psychotech.model.dto.EditClient;
+import ru.psychotech.model.dto.NewClient;
 import ru.psychotech.repository.ClientRepository;
 
 import java.util.List;
@@ -40,8 +41,8 @@ public class ClientServiceImpl implements ClientService{
   }
 
   @Override
-  public ClientDto update(Client client) {
-    return repository.update(client)
+  public ClientDto update(Long id, EditClient client) {
+    return repository.update(id, client)
         .map(mapper::mapClientToDto)
         .orElse(null);
   }

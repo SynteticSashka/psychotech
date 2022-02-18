@@ -4,11 +4,11 @@ import static jooq_generated.tables.Clients.CLIENTS;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.psychotech.model.Client;
-import ru.psychotech.model.NewClient;
+import ru.psychotech.model.dto.EditClient;
+import ru.psychotech.model.dto.NewClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientRepository {
   private final DSLContext dslContext;
-  private final jooq_generated.tables.daos.ClientsDao dao;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
   public List<Client> getList() {
@@ -27,11 +26,22 @@ public class ClientRepository {
         .map(r -> r.into(Client.class));
   }
 
-  public Optional<Client> update(Client client) {
-    return dslContext.update(CLIENTS)
-        .set(dslContext.newRecord(CLIENTS, client))
+  public Optional<Client> update(Long id, EditClient client) {
+    var current = this.findByEmail(client.getEmail());
+
+    if (current.isPresent() && (!current.get().getId().equals(id))) {
+      return Optional.empty();
+    }
+
+    client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+
+    return this.dslContext.update(CLIENTS)
+        .set(CLIENTS.NAME, client.getName())
+        .set(CLIENTS.LASTNAME, client.getLastname())
+        .set(CLIENTS.EMAIL, client.getEmail())
+        .set(CLIENTS.PASSWORD, client.getPassword())
         .where(
-            CLIENTS.ID.eq(client.getId()),
+            CLIENTS.ID.eq(id),
             CLIENTS.DELETED.eq(false)
         )
         .returning()
@@ -49,15 +59,14 @@ public class ClientRepository {
         .map(r -> r.into(Client.class));
   }
 
-  public Client findByEmail(String email) throws UsernameNotFoundException {
+  public Optional<Client> findByEmail(String email) {
     return dslContext.selectFrom(CLIENTS)
         .where(
             CLIENTS.EMAIL.eq(email),
             CLIENTS.DELETED.eq(false)
         )
         .fetchOptional()
-        .map(r -> r.into(Client.class))
-        .orElseThrow(() -> new UsernameNotFoundException("User"));
+        .map(r -> r.into(Client.class));
   }
 
   public Optional<Client> create(NewClient client) {

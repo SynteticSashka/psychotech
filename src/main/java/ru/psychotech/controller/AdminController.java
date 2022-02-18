@@ -12,6 +12,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.psychotech.model.Client;
 import ru.psychotech.model.Role;
+import ru.psychotech.model.dto.EditClient;
 import ru.psychotech.repository.ClientRepository;
 import ru.psychotech.service.ClientService;
 
@@ -76,11 +77,13 @@ public class AdminController {
 
     var optionalClient = repository.get(id);
     if (optionalClient.isPresent()) {
-      var client = optionalClient.get();
-      client.setName(name);
-      client.setLastname(lastname);
-      client.setRole(Role.valueOf(role));
-      repository.update(client);
+      var client = new EditClient(
+          optionalClient.get().getName(),
+          optionalClient.get().getLastname(),
+          optionalClient.get().getEmail(),
+          optionalClient.get().getPassword()
+          );
+      repository.update(optionalClient.get().getId(), client);
     }
 
     return "redirect:/admin/";
