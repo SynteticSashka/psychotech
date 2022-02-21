@@ -3,10 +3,9 @@ package ru.psychotech.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.psychotech.mapper.ClientDtoMapper;
-import ru.psychotech.model.Client;
-import ru.psychotech.model.dto.ClientDto;
-import ru.psychotech.model.dto.EditClient;
-import ru.psychotech.model.dto.NewClient;
+import ru.psychotech.model.client.ClientDto;
+import ru.psychotech.model.client.EditClient;
+import ru.psychotech.model.client.NewClient;
 import ru.psychotech.repository.ClientRepository;
 
 import java.util.List;

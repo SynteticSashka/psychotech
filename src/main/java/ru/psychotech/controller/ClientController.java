@@ -3,6 +3,8 @@ package ru.psychotech.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.psychotech.model.dto.ClientDto;
-import ru.psychotech.model.dto.EditClient;
-import ru.psychotech.model.dto.NewClient;
+import ru.psychotech.model.Client;
+import ru.psychotech.model.client.ClientDto;
+import ru.psychotech.model.client.EditClient;
+import ru.psychotech.model.client.NewClient;
 import ru.psychotech.service.ClientService;
 
 import java.net.URI;
@@ -28,6 +31,17 @@ public class ClientController {
   @GetMapping("/")
   public ResponseEntity<List<ClientDto>> getClients() {
     return ResponseEntity.ok().body(clientService.getClients());
+  }
+
+  @GetMapping("/whoiam")
+  public ResponseEntity<ClientDto> getMe() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth == null) {
+      return ResponseEntity.notFound().build();
+    }
+    Object principal = auth.getPrincipal();
+    Client user = (principal instanceof Client) ? (Client) principal : null;
+    return ResponseEntity.ok().body(clientService.getClient(user.getId()));
   }
 
   @GetMapping("/{id}")

@@ -5,6 +5,10 @@ package jooq_generated;
 
 
 import jooq_generated.tables.Clients;
+import jooq_generated.tables.Diagnostic;
+import jooq_generated.tables.DiagnosticResults;
+import jooq_generated.tables.Questions;
+import jooq_generated.tables.Scales;
 
 
 /**
@@ -17,4 +21,24 @@ public class Tables {
      * The table <code>public.clients</code>.
      */
     public static final Clients CLIENTS = Clients.CLIENTS;
+
+    /**
+     * The table <code>public.diagnostic</code>.
+     */
+    public static final Diagnostic DIAGNOSTIC = Diagnostic.DIAGNOSTIC;
+
+    /**
+     * The table <code>public.diagnostic_results</code>.
+     */
+    public static final DiagnosticResults DIAGNOSTIC_RESULTS = DiagnosticResults.DIAGNOSTIC_RESULTS;
+
+    /**
+     * The table <code>public.questions</code>.
+     */
+    public static final Questions QUESTIONS = Questions.QUESTIONS;
+
+    /**
+     * The table <code>public.scales</code>.
+     */
+    public static final Scales SCALES = Scales.SCALES;
 }

@@ -2,7 +2,7 @@ package ru.psychotech.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.psychotech.model.Client;
-import ru.psychotech.model.dto.ClientDto;
+import ru.psychotech.model.client.ClientDto;
 
 @Component
 public class ClientDtoMapper {

@@ -1,9 +1,8 @@
 package ru.psychotech.service;
 
-import ru.psychotech.model.Client;
-import ru.psychotech.model.dto.ClientDto;
-import ru.psychotech.model.dto.EditClient;
-import ru.psychotech.model.dto.NewClient;
+import ru.psychotech.model.client.ClientDto;
+import ru.psychotech.model.client.EditClient;
+import ru.psychotech.model.client.NewClient;
 
 import java.util.List;
 
