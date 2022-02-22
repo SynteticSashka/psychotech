@@ -2,7 +2,7 @@ package ru.psychotech.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.psychotech.mapper.ClientDtoMapper;
+import ru.psychotech.mapper.ClientMapper;
 import ru.psychotech.model.client.ClientDto;
 import ru.psychotech.model.client.EditClient;
 import ru.psychotech.model.client.NewClient;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService{
   private final ClientRepository repository;
-  private final ClientDtoMapper mapper;
+  private final ClientMapper mapper;
 
   @Override
   public List<ClientDto> getClients() {

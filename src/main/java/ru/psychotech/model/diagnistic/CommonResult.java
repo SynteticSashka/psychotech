@@ -1,17 +1,19 @@
-package ru.psychotech.model.diagnistic.accentuations;
+package ru.psychotech.model.diagnistic;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccentuationsResult {
+public class CommonResult {
   private Long resultId;
   private Long diagId;
   private Long userId;
-  private Map<AccentuationScale, Integer> result;
+  private Map<Scale, Integer> result;
 }

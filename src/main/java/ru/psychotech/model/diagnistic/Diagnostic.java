@@ -1,20 +1,21 @@
-package ru.psychotech.model.diagnistic.accentuations;
+package ru.psychotech.model.diagnistic;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.psychotech.model.diagnistic.DiagnosticType;
 
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Accentuations {
+public class Diagnostic {
   private Long id;
-  private final DiagnosticType diagnosticType = DiagnosticType.TRUE_FALSE;
+  private DiagnosticType diagnosticType;
   private String name;
   private String description;
-  private List<AccentuationScale> scales;
+  private List<Scale> scales;
   private List<String> questions;
 }
