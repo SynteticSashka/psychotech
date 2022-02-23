@@ -5,15 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonResult {
-  private Long resultId;
-  private Long diagId;
-  private Long userId;
-  private Map<Scale, Integer> result;
+public class DiagnosticResult {
+  List<Integer> answers;
 }

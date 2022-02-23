@@ -12,6 +12,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -38,5 +39,9 @@ public class DiagnosticRepository {
         .where(QUESTIONS.DIAGNOSTIC_ID.eq(diagnosticId))
         .fetch()
         .getValues(QUESTIONS.TEXT);
+  }
+
+  public void saveResult(Long clientId, Long daignosticId, Map<Long, Integer> result) {
+
   }
 }

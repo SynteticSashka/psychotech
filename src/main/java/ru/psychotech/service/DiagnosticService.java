@@ -1,9 +1,12 @@
 package ru.psychotech.service;
 
-import ru.psychotech.model.diagnistic.Diagnostic;
+import ru.psychotech.model.diagnistic.DiagnosticResult;
+import ru.psychotech.model.diagnistic.DiagnosticDto;
 
 public interface DiagnosticService {
 
-  Diagnostic getDiagnostic(Long id);
+  DiagnosticDto getDiagnostic(Long id);
+
+  void postResult(Long diagnosticId, Long clientId, DiagnosticResult result);
 
 }

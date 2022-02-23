@@ -11,11 +11,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Diagnostic {
+public class DiagnosticDto {
   private Long id;
   private DiagnosticType diagnosticType;
   private String name;
   private String description;
-  private List<Scale> scales;
   private List<String> questions;
 }
