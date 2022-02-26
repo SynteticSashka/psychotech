@@ -62,6 +62,16 @@ public class DiagnosticMapper {
   public List<ScaleWithValue> mapAccentuationsResults(List<DiagnosticResults> results, List<Scales> scales) {
     List<ScaleWithValue> list = new ArrayList<>();
     for (DiagnosticResults dr : results) {
+      String comment;
+      if (dr.getResult() < 12) {
+        comment = "Эта черта характера практически не оказывает влияния на вашу жизнь";
+      } else if (dr.getResult() >= 12 && dr.getResult() < 21) {
+        comment = "У вас есть эта черта характера. Чем выше значение - тем ярче она выражена";
+      } else {
+        comment = "Эта черта характера может влиять на ваши поступки и желания вопреки вашей воле. " +
+            "Рекомендуется консультация психотерапевта";
+      }
+
       var scale = scales.stream().filter(e -> e.getId().equals(dr.getScaleId())).findFirst();
       scale.ifPresent(value -> list.add(new ScaleWithValue(
           value.getId(),
@@ -69,7 +79,7 @@ public class DiagnosticMapper {
           value.getDescription(),
           value.getDetailedDescription(),
           dr.getResult(),
-          ""
+          comment
       )));
     }
     return list;
