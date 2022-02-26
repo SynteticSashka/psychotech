@@ -22,10 +22,11 @@ CREATE TABLE questions (
 CREATE SEQUENCE scales_seq;
 
 CREATE TABLE scales (
-     id                 bigint            NOT NULL DEFAULT nextval('scales_seq'),
-     diagnostic_id      bigint            NOT NULL REFERENCES diagnostic(id),
-     name               character varying NOT NULL,
-     description        character varying NOT NULL,
+     id                   bigint            NOT NULL DEFAULT nextval('scales_seq'),
+     diagnostic_id        bigint            NOT NULL REFERENCES diagnostic(id),
+     name                 character varying NOT NULL,
+     description          character varying NOT NULL DEFAULT '',
+     detailed_description character varying NOT NULL DEFAULT '',
 
      CONSTRAINT pk_scales PRIMARY KEY(id)
 );

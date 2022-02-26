@@ -16,7 +16,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -66,7 +66,12 @@ public class Scales extends TableImpl<ScalesRecord> {
     /**
      * The column <code>public.scales.description</code>.
      */
-    public final TableField<ScalesRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<ScalesRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field("''::character varying", SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>public.scales.detailed_description</code>.
+     */
+    public final TableField<ScalesRecord, String> DETAILED_DESCRIPTION = createField(DSL.name("detailed_description"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field("''::character varying", SQLDataType.VARCHAR)), this, "");
 
     private Scales(Name alias, Table<ScalesRecord> aliased) {
         this(alias, aliased, null);
@@ -162,11 +167,11 @@ public class Scales extends TableImpl<ScalesRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Long, Long, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Long, Long, String, String, String> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

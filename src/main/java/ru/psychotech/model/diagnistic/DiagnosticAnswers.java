@@ -5,12 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Scale {
-  private Long scaleId;
-  private String name;
-  private String description;
+public class DiagnosticAnswers {
+  List<Integer> answers;
 }

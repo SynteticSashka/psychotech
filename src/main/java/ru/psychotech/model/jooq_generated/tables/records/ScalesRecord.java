@@ -8,8 +8,8 @@ import jooq_generated.tables.Scales;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record4;
-import org.jooq.Row4;
+import org.jooq.Record5;
+import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -17,7 +17,7 @@ import org.jooq.impl.UpdatableRecordImpl;
  * The table <code>public.scales</code>.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements Record4<Long, Long, String, String> {
+public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements Record5<Long, Long, String, String, String> {
 
     private static final long serialVersionUID = 1L;
 
@@ -77,6 +77,20 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
         return (String) get(3);
     }
 
+    /**
+     * Setter for <code>public.scales.detailed_description</code>.
+     */
+    public void setDetailedDescription(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>public.scales.detailed_description</code>.
+     */
+    public String getDetailedDescription() {
+        return (String) get(4);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -87,17 +101,17 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
     }
 
     // -------------------------------------------------------------------------
-    // Record4 type implementation
+    // Record5 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Long, Long, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Long, Long, String, String, String> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 
     @Override
-    public Row4<Long, Long, String, String> valuesRow() {
-        return (Row4) super.valuesRow();
+    public Row5<Long, Long, String, String, String> valuesRow() {
+        return (Row5) super.valuesRow();
     }
 
     @Override
@@ -121,6 +135,11 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
     }
 
     @Override
+    public Field<String> field5() {
+        return Scales.SCALES.DETAILED_DESCRIPTION;
+    }
+
+    @Override
     public Long component1() {
         return getId();
     }
@@ -141,6 +160,11 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
     }
 
     @Override
+    public String component5() {
+        return getDetailedDescription();
+    }
+
+    @Override
     public Long value1() {
         return getId();
     }
@@ -158,6 +182,11 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
     @Override
     public String value4() {
         return getDescription();
+    }
+
+    @Override
+    public String value5() {
+        return getDetailedDescription();
     }
 
     @Override
@@ -185,11 +214,18 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
     }
 
     @Override
-    public ScalesRecord values(Long value1, Long value2, String value3, String value4) {
+    public ScalesRecord value5(String value) {
+        setDetailedDescription(value);
+        return this;
+    }
+
+    @Override
+    public ScalesRecord values(Long value1, Long value2, String value3, String value4, String value5) {
         value1(value1);
         value2(value2);
         value3(value3);
         value4(value4);
+        value5(value5);
         return this;
     }
 
@@ -207,12 +243,13 @@ public class ScalesRecord extends UpdatableRecordImpl<ScalesRecord> implements R
     /**
      * Create a detached, initialised ScalesRecord
      */
-    public ScalesRecord(Long id, Long diagnosticId, String name, String description) {
+    public ScalesRecord(Long id, Long diagnosticId, String name, String description, String detailedDescription) {
         super(Scales.SCALES);
 
         setId(id);
         setDiagnosticId(diagnosticId);
         setName(name);
         setDescription(description);
+        setDetailedDescription(detailedDescription);
     }
 }

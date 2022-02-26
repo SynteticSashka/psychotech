@@ -4,8 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.psychotech.mapper.DiagnosticMapper;
-import ru.psychotech.model.diagnistic.Scale;
+import ru.psychotech.model.diagnistic.DiagnosticResult;
+import ru.psychotech.model.diagnistic.ScaleWithValue;
 import ru.psychotech.repository.DiagnosticRepository;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedMap;
@@ -19,16 +23,41 @@ public class AccentuationCalculator {
   private final DiagnosticMapper diagnosticMapper;
   private final Long diagnosticId = 1L;
 
+  public DiagnosticResult getResults(Long clientId) {
+    var diag = repository.getDiagnostic(diagnosticId);
+    if (diag.isEmpty()) return null;
+
+    String name = diag.get().getName();
+    String description = diag.get().getDescription();
+    var scalesAndValues = diagnosticMapper.mapAccentuationsResults(
+        repository.getResults(clientId, diagnosticId), repository.getScales(diagnosticId));
+
+    Collections.sort(scalesAndValues);
+
+    var recommendations = getRecommendations(scalesAndValues);
+
+    return new DiagnosticResult(name, description, recommendations, scalesAndValues);
+  }
+
+  private List<String> getRecommendations(List<ScaleWithValue> list) {
+    List<String> recommendations = new ArrayList<>();
+    return recommendations;
+  }
+
   public void calculateAndWrite(Long clientId, List<Integer> answers) {
-    SortedMap<Long, Integer> result = new TreeMap<>(Comparator.comparingLong(o -> o));
-    List<Scale> scales = diagnosticMapper.mapScaleList(repository.getScales(diagnosticId));
+    List<Long> completed = repository.getCompleted(clientId);
 
-    for (int i = 0; i < scales.size(); i++) {
-      Long scaleId = scales.get(i).getScaleId();
-      result.put(scaleId, getScaleValue(scaleId, answers));
+    if (!completed.contains(diagnosticId)) {
+      SortedMap<Long, Integer> result = new TreeMap<>(Comparator.comparingLong(o -> o));
+      List<ScaleWithValue> scales = diagnosticMapper.mapScaleList(repository.getScales(diagnosticId));
+
+      for (ScaleWithValue scale : scales) {
+        Long scaleId = scale.getScaleId();
+        result.put(scaleId, getScaleValue(scaleId, answers));
+      }
+
+      repository.saveResult(clientId, diagnosticId, result);
     }
-
-    repository.saveResult(clientId, diagnosticId, result);
   }
 
   private Integer getScaleValue(Long scaleId, List<Integer> answers) {

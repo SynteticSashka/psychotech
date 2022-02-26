@@ -19,6 +19,7 @@ public class Scales implements Serializable {
     private Long   diagnosticId;
     private String name;
     private String description;
+    private String detailedDescription;
 
     public Scales() {}
 
@@ -27,18 +28,21 @@ public class Scales implements Serializable {
         this.diagnosticId = value.diagnosticId;
         this.name = value.name;
         this.description = value.description;
+        this.detailedDescription = value.detailedDescription;
     }
 
     public Scales(
         Long   id,
         Long   diagnosticId,
         String name,
-        String description
+        String description,
+        String detailedDescription
     ) {
         this.id = id;
         this.diagnosticId = diagnosticId;
         this.name = name;
         this.description = description;
+        this.detailedDescription = detailedDescription;
     }
 
     /**
@@ -97,6 +101,20 @@ public class Scales implements Serializable {
         this.description = description;
     }
 
+    /**
+     * Getter for <code>public.scales.detailed_description</code>.
+     */
+    public String getDetailedDescription() {
+        return this.detailedDescription;
+    }
+
+    /**
+     * Setter for <code>public.scales.detailed_description</code>.
+     */
+    public void setDetailedDescription(String detailedDescription) {
+        this.detailedDescription = detailedDescription;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Scales (");
@@ -105,6 +123,7 @@ public class Scales implements Serializable {
         sb.append(", ").append(diagnosticId);
         sb.append(", ").append(name);
         sb.append(", ").append(description);
+        sb.append(", ").append(detailedDescription);
 
         sb.append(")");
         return sb.toString();

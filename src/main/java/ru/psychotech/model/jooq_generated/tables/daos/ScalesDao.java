@@ -100,4 +100,18 @@ public class ScalesDao extends DAOImpl<ScalesRecord, jooq_generated.tables.pojos
     public List<jooq_generated.tables.pojos.Scales> fetchByDescription(String... values) {
         return fetch(Scales.SCALES.DESCRIPTION, values);
     }
+
+    /**
+     * Fetch records that have <code>detailed_description BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    public List<jooq_generated.tables.pojos.Scales> fetchRangeOfDetailedDescription(String lowerInclusive, String upperInclusive) {
+        return fetchRange(Scales.SCALES.DETAILED_DESCRIPTION, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>detailed_description IN (values)</code>
+     */
+    public List<jooq_generated.tables.pojos.Scales> fetchByDetailedDescription(String... values) {
+        return fetch(Scales.SCALES.DETAILED_DESCRIPTION, values);
+    }
 }
