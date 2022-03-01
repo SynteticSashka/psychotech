@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.psychotech.model.Client;
-import ru.psychotech.model.dto.NewClient;
+import ru.psychotech.model.client.NewClient;
 import ru.psychotech.repository.ClientRepository;
 
 import java.util.regex.Pattern;

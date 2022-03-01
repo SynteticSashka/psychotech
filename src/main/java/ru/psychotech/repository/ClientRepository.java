@@ -7,8 +7,8 @@ import org.jooq.DSLContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.psychotech.model.Client;
-import ru.psychotech.model.dto.EditClient;
-import ru.psychotech.model.dto.NewClient;
+import ru.psychotech.model.client.EditClient;
+import ru.psychotech.model.client.NewClient;
 
 import java.util.List;
 import java.util.Optional;

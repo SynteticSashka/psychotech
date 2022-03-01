@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import jooq_generated.tables.Clients;
+import jooq_generated.tables.Diagnostic;
+import jooq_generated.tables.DiagnosticResults;
+import jooq_generated.tables.Questions;
+import jooq_generated.tables.Recommendations;
+import jooq_generated.tables.Scales;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -33,6 +38,31 @@ public class Public extends SchemaImpl {
     public final Clients CLIENTS = Clients.CLIENTS;
 
     /**
+     * The table <code>public.diagnostic</code>.
+     */
+    public final Diagnostic DIAGNOSTIC = Diagnostic.DIAGNOSTIC;
+
+    /**
+     * The table <code>public.diagnostic_results</code>.
+     */
+    public final DiagnosticResults DIAGNOSTIC_RESULTS = DiagnosticResults.DIAGNOSTIC_RESULTS;
+
+    /**
+     * The table <code>public.questions</code>.
+     */
+    public final Questions QUESTIONS = Questions.QUESTIONS;
+
+    /**
+     * The table <code>public.recommendations</code>.
+     */
+    public final Recommendations RECOMMENDATIONS = Recommendations.RECOMMENDATIONS;
+
+    /**
+     * The table <code>public.scales</code>.
+     */
+    public final Scales SCALES = Scales.SCALES;
+
+    /**
      * No further instances allowed
      */
     private Public() {
@@ -48,6 +78,11 @@ public class Public extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
-            Clients.CLIENTS);
+            Clients.CLIENTS,
+            Diagnostic.DIAGNOSTIC,
+            DiagnosticResults.DIAGNOSTIC_RESULTS,
+            Questions.QUESTIONS,
+            Recommendations.RECOMMENDATIONS,
+            Scales.SCALES);
     }
 }
