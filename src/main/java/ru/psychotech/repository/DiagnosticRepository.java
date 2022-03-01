@@ -3,6 +3,7 @@ package ru.psychotech.repository;
 import static jooq_generated.Tables.DIAGNOSTIC;
 import static jooq_generated.Tables.QUESTIONS;
 import static jooq_generated.Tables.DIAGNOSTIC_RESULTS;
+import static jooq_generated.Tables.RECOMMENDATIONS;
 import static jooq_generated.Tables.SCALES;
 
 import jooq_generated.tables.pojos.Diagnostic;
@@ -65,6 +66,14 @@ public class DiagnosticRepository {
         .where(QUESTIONS.DIAGNOSTIC_ID.eq(diagnosticId))
         .fetch()
         .getValues(QUESTIONS.TEXT);
+  }
+
+  public List<String> getRecommendationsText(Long diagnosticId) {
+    return this.dslContext.select(RECOMMENDATIONS.TEXT)
+        .from(RECOMMENDATIONS)
+        .where(RECOMMENDATIONS.DIAGNOSTIC_ID.eq(diagnosticId))
+        .fetch()
+        .getValues(RECOMMENDATIONS.TEXT);
   }
 
   public List<DiagnosticResults> getResults(Long clientId, Long diagnosticId) {

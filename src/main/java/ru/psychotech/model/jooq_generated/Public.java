@@ -11,6 +11,7 @@ import jooq_generated.tables.Clients;
 import jooq_generated.tables.Diagnostic;
 import jooq_generated.tables.DiagnosticResults;
 import jooq_generated.tables.Questions;
+import jooq_generated.tables.Recommendations;
 import jooq_generated.tables.Scales;
 
 import org.jooq.Catalog;
@@ -52,6 +53,11 @@ public class Public extends SchemaImpl {
     public final Questions QUESTIONS = Questions.QUESTIONS;
 
     /**
+     * The table <code>public.recommendations</code>.
+     */
+    public final Recommendations RECOMMENDATIONS = Recommendations.RECOMMENDATIONS;
+
+    /**
      * The table <code>public.scales</code>.
      */
     public final Scales SCALES = Scales.SCALES;
@@ -76,6 +82,7 @@ public class Public extends SchemaImpl {
             Diagnostic.DIAGNOSTIC,
             DiagnosticResults.DIAGNOSTIC_RESULTS,
             Questions.QUESTIONS,
+            Recommendations.RECOMMENDATIONS,
             Scales.SCALES);
     }
 }

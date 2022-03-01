@@ -8,6 +8,7 @@ import jooq_generated.tables.Clients;
 import jooq_generated.tables.Diagnostic;
 import jooq_generated.tables.DiagnosticResults;
 import jooq_generated.tables.Questions;
+import jooq_generated.tables.Recommendations;
 import jooq_generated.tables.Scales;
 
 
@@ -36,6 +37,11 @@ public class Tables {
      * The table <code>public.questions</code>.
      */
     public static final Questions QUESTIONS = Questions.QUESTIONS;
+
+    /**
+     * The table <code>public.recommendations</code>.
+     */
+    public static final Recommendations RECOMMENDATIONS = Recommendations.RECOMMENDATIONS;
 
     /**
      * The table <code>public.scales</code>.
