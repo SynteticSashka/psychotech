@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 @Component
 @Transactional
@@ -162,6 +161,7 @@ public class AccentuationCalculator {
   private List<String> getRecommendations(List<ScaleWithValue> list) {
     List<String> recommendations = new ArrayList<>();
     List<String> fromDB = repository.getRecommendationsText(diagnosticId);
+
     // Большинство показателей меньше или равно 6
     if (list.stream().filter(r -> r.getValue() <= 6).count() >= 8) {
       recommendations.add(fromDB.get(0));
@@ -184,18 +184,18 @@ public class AccentuationCalculator {
         .count() >= 3) {
       recommendations.add(fromDB.get(3));
     }
-    // Застревание, возбудимость, эмотивность, тревожность, экзальтированность (3 из них) <=7
+    // Застревание, возбудимость, эмотивность, тревожность, экзальтированность (4 из них) <=7
     if (list.stream()
         .filter(r -> r.getScaleId() == 2 || r.getScaleId() == 4 || r.getScaleId() == 7 || r.getScaleId() == 8 || r.getScaleId() == 9)
         .filter(r -> r.getValue() <= 7)
-        .count() >= 3) {
+        .count() >= 4) {
       recommendations.add(fromDB.get(4));
     }
-    // Застревание, возбудимость, эмотивность, тревожность, экзальтированность (3 из них) >=18
+    // Застревание, возбудимость, эмотивность, тревожность, экзальтированность (4 из них) >=18
     if (list.stream()
         .filter(r -> r.getScaleId() == 2 || r.getScaleId() == 4 || r.getScaleId() == 7 || r.getScaleId() == 8 || r.getScaleId() == 9)
         .filter(r -> r.getValue() >= 18)
-        .count() >= 3) {
+        .count() >= 4) {
       recommendations.add(fromDB.get(5));
     }
     // Демонстративность и гипертимность >= 15
@@ -278,7 +278,7 @@ public class AccentuationCalculator {
     }
     // Циклотимность 16+ гипертимность 8-
     if (list.stream()
-        .filter(r -> (r.getScaleId() == 10 && r.getValue() <= 8) || (r.getScaleId() == 5 && r.getValue() >= 16))
+        .filter(r -> (r.getScaleId() == 5 && r.getValue() <= 8) || (r.getScaleId() == 10 && r.getValue() >= 16))
         .count() >= 2) {
       recommendations.add(fromDB.get(17));
     }
