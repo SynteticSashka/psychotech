@@ -130,6 +130,20 @@ public class ClientsDao extends DAOImpl<ClientsRecord, jooq_generated.tables.poj
     }
 
     /**
+     * Fetch records that have <code>gender BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    public List<jooq_generated.tables.pojos.Clients> fetchRangeOfGender(String lowerInclusive, String upperInclusive) {
+        return fetchRange(Clients.CLIENTS.GENDER, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>gender IN (values)</code>
+     */
+    public List<jooq_generated.tables.pojos.Clients> fetchByGender(String... values) {
+        return fetch(Clients.CLIENTS.GENDER, values);
+    }
+
+    /**
      * Fetch records that have <code>deleted BETWEEN lowerInclusive AND upperInclusive</code>
      */
     public List<jooq_generated.tables.pojos.Clients> fetchRangeOfDeleted(Boolean lowerInclusive, Boolean upperInclusive) {

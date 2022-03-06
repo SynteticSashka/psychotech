@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jooq_generated.tables.Clients;
+import jooq_generated.tables.ClientsSummary;
 import jooq_generated.tables.Diagnostic;
 import jooq_generated.tables.DiagnosticResults;
 import jooq_generated.tables.Questions;
@@ -36,6 +37,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.clients</code>.
      */
     public final Clients CLIENTS = Clients.CLIENTS;
+
+    /**
+     * The table <code>public.clients_summary</code>.
+     */
+    public final ClientsSummary CLIENTS_SUMMARY = ClientsSummary.CLIENTS_SUMMARY;
 
     /**
      * The table <code>public.diagnostic</code>.
@@ -79,6 +85,7 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             Clients.CLIENTS,
+            ClientsSummary.CLIENTS_SUMMARY,
             Diagnostic.DIAGNOSTIC,
             DiagnosticResults.DIAGNOSTIC_RESULTS,
             Questions.QUESTIONS,

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.psychotech.model.Client;
+import ru.psychotech.model.client.Gender;
 import ru.psychotech.model.client.NewClient;
 import ru.psychotech.repository.ClientRepository;
 
@@ -92,7 +93,7 @@ public class RegistrationController {
       return "registration";
     }
 
-    var client = new NewClient(name, lastname, email, password);
+    var client = new NewClient(name, lastname, email, password, Gender.MALE);
 
     if (clientRepository.create(client).isEmpty()) { // если пользователь уже существует
       model.addAttribute("emailAlreadyExistError", "Пользователь с таким именем уже существует");

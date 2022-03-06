@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.psychotech.mapper.DiagnosticMapper;
 import ru.psychotech.model.diagnistic.DiagnosticResult;
 import ru.psychotech.model.diagnistic.ScaleWithValue;
+import ru.psychotech.repository.ClientSummaryRepository;
 import ru.psychotech.repository.DiagnosticRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,18 +19,19 @@ import java.util.TreeMap;
 @Transactional
 @RequiredArgsConstructor
 public class AccentuationCalculator {
-  private final DiagnosticRepository repository;
+  private final DiagnosticRepository diagnosticRepository;
+  private final ClientSummaryRepository summaryRepository;
   private final DiagnosticMapper diagnosticMapper;
   private final Long diagnosticId = 1L;
 
   public DiagnosticResult getResults(Long clientId) {
-    var diag = repository.getDiagnostic(diagnosticId);
+    var diag = diagnosticRepository.getDiagnostic(diagnosticId);
     if (diag.isEmpty()) return null;
 
     String name = diag.get().getName();
     String description = diag.get().getDescription();
     var scalesAndValues = diagnosticMapper.mapAccentuationsResults(
-        repository.getResults(clientId, diagnosticId), repository.getScales(diagnosticId));
+        diagnosticRepository.getResults(clientId, diagnosticId), diagnosticRepository.getScales(diagnosticId));
 
     Collections.sort(scalesAndValues);
 
@@ -39,18 +41,27 @@ public class AccentuationCalculator {
   }
 
   public void calculateAndWrite(Long clientId, List<Integer> answers) {
-    List<Long> completed = repository.getCompleted(clientId);
+    List<Long> completed = diagnosticRepository.getCompleted(clientId);
+    int energyLevel = 0;
 
     if (!completed.contains(diagnosticId)) {
       SortedMap<Long, Integer> result = new TreeMap<>(Comparator.comparingLong(o -> o));
-      List<ScaleWithValue> scales = diagnosticMapper.mapScaleList(repository.getScales(diagnosticId));
+      List<ScaleWithValue> scales = diagnosticMapper.mapScaleList(diagnosticRepository.getScales(diagnosticId));
 
       for (ScaleWithValue scale : scales) {
         Long scaleId = scale.getScaleId();
-        result.put(scaleId, getScaleValue(scaleId, answers));
+        Integer value = getScaleValue(scaleId, answers);
+        result.put(scaleId, value);
+
+        if (scaleId == 1 || scaleId == 5 || scaleId == 10) {
+          energyLevel += value;
+        }
       }
 
-      repository.saveResult(clientId, diagnosticId, result);
+      int energyLevelPercentage = (energyLevel*100)/72;
+
+      diagnosticRepository.saveResult(clientId, diagnosticId, result);
+      summaryRepository.setSummary(clientId, diagnosticId, energyLevelPercentage);
     }
   }
 
@@ -160,7 +171,7 @@ public class AccentuationCalculator {
   // Система рекомендаций
   private List<String> getRecommendations(List<ScaleWithValue> list) {
     List<String> recommendations = new ArrayList<>();
-    List<String> fromDB = repository.getRecommendationsText(diagnosticId);
+    List<String> fromDB = diagnosticRepository.getRecommendationsText(diagnosticId);
 
     // Большинство показателей меньше или равно 6
     if (list.stream().filter(r -> r.getValue() <= 6).count() >= 8) {

@@ -5,12 +5,14 @@ package jooq_generated;
 
 
 import jooq_generated.tables.Clients;
+import jooq_generated.tables.ClientsSummary;
 import jooq_generated.tables.Diagnostic;
 import jooq_generated.tables.DiagnosticResults;
 import jooq_generated.tables.Questions;
 import jooq_generated.tables.Recommendations;
 import jooq_generated.tables.Scales;
 import jooq_generated.tables.records.ClientsRecord;
+import jooq_generated.tables.records.ClientsSummaryRecord;
 import jooq_generated.tables.records.DiagnosticRecord;
 import jooq_generated.tables.records.DiagnosticResultsRecord;
 import jooq_generated.tables.records.QuestionsRecord;
@@ -36,6 +38,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<ClientsRecord> PK_USERS = Internal.createUniqueKey(Clients.CLIENTS, DSL.name("pk_users"), new TableField[] { Clients.CLIENTS.ID }, true);
+    public static final UniqueKey<ClientsSummaryRecord> PK_CLIENTS_SUMMARY = Internal.createUniqueKey(ClientsSummary.CLIENTS_SUMMARY, DSL.name("pk_clients_summary"), new TableField[] { ClientsSummary.CLIENTS_SUMMARY.CLIENT_ID }, true);
     public static final UniqueKey<DiagnosticRecord> PK_DIAGNOSTIC = Internal.createUniqueKey(Diagnostic.DIAGNOSTIC, DSL.name("pk_diagnostic"), new TableField[] { Diagnostic.DIAGNOSTIC.ID }, true);
     public static final UniqueKey<DiagnosticResultsRecord> PK_DIAGNOSTIC_RESULTS = Internal.createUniqueKey(DiagnosticResults.DIAGNOSTIC_RESULTS, DSL.name("pk_diagnostic_results"), new TableField[] { DiagnosticResults.DIAGNOSTIC_RESULTS.ID }, true);
     public static final UniqueKey<QuestionsRecord> PK_QUESTIONS = Internal.createUniqueKey(Questions.QUESTIONS, DSL.name("pk_questions"), new TableField[] { Questions.QUESTIONS.ID }, true);
@@ -46,6 +49,7 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<ClientsSummaryRecord, ClientsRecord> CLIENTS_SUMMARY__CLIENTS_SUMMARY_CLIENT_ID_FKEY = Internal.createForeignKey(ClientsSummary.CLIENTS_SUMMARY, DSL.name("clients_summary_client_id_fkey"), new TableField[] { ClientsSummary.CLIENTS_SUMMARY.CLIENT_ID }, Keys.PK_USERS, new TableField[] { Clients.CLIENTS.ID }, true);
     public static final ForeignKey<DiagnosticResultsRecord, ClientsRecord> DIAGNOSTIC_RESULTS__DIAGNOSTIC_RESULTS_CLIENT_ID_FKEY = Internal.createForeignKey(DiagnosticResults.DIAGNOSTIC_RESULTS, DSL.name("diagnostic_results_client_id_fkey"), new TableField[] { DiagnosticResults.DIAGNOSTIC_RESULTS.CLIENT_ID }, Keys.PK_USERS, new TableField[] { Clients.CLIENTS.ID }, true);
     public static final ForeignKey<DiagnosticResultsRecord, DiagnosticRecord> DIAGNOSTIC_RESULTS__DIAGNOSTIC_RESULTS_DIAGNOSTIC_ID_FKEY = Internal.createForeignKey(DiagnosticResults.DIAGNOSTIC_RESULTS, DSL.name("diagnostic_results_diagnostic_id_fkey"), new TableField[] { DiagnosticResults.DIAGNOSTIC_RESULTS.DIAGNOSTIC_ID }, Keys.PK_DIAGNOSTIC, new TableField[] { Diagnostic.DIAGNOSTIC.ID }, true);
     public static final ForeignKey<DiagnosticResultsRecord, ScalesRecord> DIAGNOSTIC_RESULTS__DIAGNOSTIC_RESULTS_SCALE_ID_FKEY = Internal.createForeignKey(DiagnosticResults.DIAGNOSTIC_RESULTS, DSL.name("diagnostic_results_scale_id_fkey"), new TableField[] { DiagnosticResults.DIAGNOSTIC_RESULTS.SCALE_ID }, Keys.PK_SCALES, new TableField[] { Scales.SCALES.ID }, true);

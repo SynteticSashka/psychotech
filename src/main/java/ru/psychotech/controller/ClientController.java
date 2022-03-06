@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.psychotech.model.Client;
 import ru.psychotech.model.client.ClientDto;
+import ru.psychotech.model.client.ClientSummaryDto;
 import ru.psychotech.model.client.EditClient;
 import ru.psychotech.model.client.NewClient;
 import ru.psychotech.service.ClientService;
@@ -22,11 +23,18 @@ import ru.psychotech.service.ClientService;
 import java.net.URI;
 import java.util.List;
 
+import static ru.psychotech.utils.ControllerUtils.getCurrentClientId;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/clients")
 public class ClientController {
   private final ClientService clientService;
+
+  @GetMapping("/{id}/summary")
+  public ResponseEntity<ClientSummaryDto> getClientSummary(@PathVariable Long id) {
+    return ResponseEntity.ok().body(clientService.getClientSummary(id));
+  }
 
   @GetMapping("/")
   public ResponseEntity<List<ClientDto>> getClients() {

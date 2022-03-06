@@ -8,8 +8,8 @@ import jooq_generated.tables.Clients;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record7;
-import org.jooq.Row7;
+import org.jooq.Record8;
+import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -17,7 +17,7 @@ import org.jooq.impl.UpdatableRecordImpl;
  * The table <code>public.clients</code>.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements Record7<Long, String, String, String, String, String, Boolean> {
+public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements Record8<Long, String, String, String, String, String, String, Boolean> {
 
     private static final long serialVersionUID = 1L;
 
@@ -106,17 +106,31 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     }
 
     /**
+     * Setter for <code>public.clients.gender</code>.
+     */
+    public void setGender(String value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>public.clients.gender</code>.
+     */
+    public String getGender() {
+        return (String) get(6);
+    }
+
+    /**
      * Setter for <code>public.clients.deleted</code>.
      */
     public void setDeleted(Boolean value) {
-        set(6, value);
+        set(7, value);
     }
 
     /**
      * Getter for <code>public.clients.deleted</code>.
      */
     public Boolean getDeleted() {
-        return (Boolean) get(6);
+        return (Boolean) get(7);
     }
 
     // -------------------------------------------------------------------------
@@ -129,17 +143,17 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     }
 
     // -------------------------------------------------------------------------
-    // Record7 type implementation
+    // Record8 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Long, String, String, String, String, String, Boolean> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<Long, String, String, String, String, String, String, Boolean> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 
     @Override
-    public Row7<Long, String, String, String, String, String, Boolean> valuesRow() {
-        return (Row7) super.valuesRow();
+    public Row8<Long, String, String, String, String, String, String, Boolean> valuesRow() {
+        return (Row8) super.valuesRow();
     }
 
     @Override
@@ -173,7 +187,12 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     }
 
     @Override
-    public Field<Boolean> field7() {
+    public Field<String> field7() {
+        return Clients.CLIENTS.GENDER;
+    }
+
+    @Override
+    public Field<Boolean> field8() {
         return Clients.CLIENTS.DELETED;
     }
 
@@ -208,7 +227,12 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     }
 
     @Override
-    public Boolean component7() {
+    public String component7() {
+        return getGender();
+    }
+
+    @Override
+    public Boolean component8() {
         return getDeleted();
     }
 
@@ -243,7 +267,12 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     }
 
     @Override
-    public Boolean value7() {
+    public String value7() {
+        return getGender();
+    }
+
+    @Override
+    public Boolean value8() {
         return getDeleted();
     }
 
@@ -284,13 +313,19 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     }
 
     @Override
-    public ClientsRecord value7(Boolean value) {
+    public ClientsRecord value7(String value) {
+        setGender(value);
+        return this;
+    }
+
+    @Override
+    public ClientsRecord value8(Boolean value) {
         setDeleted(value);
         return this;
     }
 
     @Override
-    public ClientsRecord values(Long value1, String value2, String value3, String value4, String value5, String value6, Boolean value7) {
+    public ClientsRecord values(Long value1, String value2, String value3, String value4, String value5, String value6, String value7, Boolean value8) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -298,6 +333,7 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
         value5(value5);
         value6(value6);
         value7(value7);
+        value8(value8);
         return this;
     }
 
@@ -315,7 +351,7 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
     /**
      * Create a detached, initialised ClientsRecord
      */
-    public ClientsRecord(Long id, String name, String lastname, String email, String password, String role, Boolean deleted) {
+    public ClientsRecord(Long id, String name, String lastname, String email, String password, String role, String gender, Boolean deleted) {
         super(Clients.CLIENTS);
 
         setId(id);
@@ -324,6 +360,7 @@ public class ClientsRecord extends UpdatableRecordImpl<ClientsRecord> implements
         setEmail(email);
         setPassword(password);
         setRole(role);
+        setGender(gender);
         setDeleted(deleted);
     }
 }

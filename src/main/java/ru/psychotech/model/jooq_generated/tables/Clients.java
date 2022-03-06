@@ -16,7 +16,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -77,6 +77,11 @@ public class Clients extends TableImpl<ClientsRecord> {
      * The column <code>public.clients.role</code>.
      */
     public final TableField<ClientsRecord, String> ROLE = createField(DSL.name("role"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field("'ROLE_USER'::character varying", SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>public.clients.gender</code>.
+     */
+    public final TableField<ClientsRecord, String> GENDER = createField(DSL.name("gender"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field("'MALE'::character varying", SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>public.clients.deleted</code>.
@@ -163,11 +168,11 @@ public class Clients extends TableImpl<ClientsRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row7 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Long, String, String, String, String, String, Boolean> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<Long, String, String, String, String, String, String, Boolean> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }

@@ -21,6 +21,7 @@ public class Clients implements Serializable {
     private String  email;
     private String  password;
     private String  role;
+    private String  gender;
     private Boolean deleted;
 
     public Clients() {}
@@ -32,6 +33,7 @@ public class Clients implements Serializable {
         this.email = value.email;
         this.password = value.password;
         this.role = value.role;
+        this.gender = value.gender;
         this.deleted = value.deleted;
     }
 
@@ -42,6 +44,7 @@ public class Clients implements Serializable {
         String  email,
         String  password,
         String  role,
+        String  gender,
         Boolean deleted
     ) {
         this.id = id;
@@ -50,6 +53,7 @@ public class Clients implements Serializable {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.gender = gender;
         this.deleted = deleted;
     }
 
@@ -138,6 +142,20 @@ public class Clients implements Serializable {
     }
 
     /**
+     * Getter for <code>public.clients.gender</code>.
+     */
+    public String getGender() {
+        return this.gender;
+    }
+
+    /**
+     * Setter for <code>public.clients.gender</code>.
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
      * Getter for <code>public.clients.deleted</code>.
      */
     public Boolean getDeleted() {
@@ -161,6 +179,7 @@ public class Clients implements Serializable {
         sb.append(", ").append(email);
         sb.append(", ").append(password);
         sb.append(", ").append(role);
+        sb.append(", ").append(gender);
         sb.append(", ").append(deleted);
 
         sb.append(")");

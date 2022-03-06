@@ -5,6 +5,7 @@ package jooq_generated;
 
 
 import jooq_generated.tables.Clients;
+import jooq_generated.tables.ClientsSummary;
 import jooq_generated.tables.Diagnostic;
 import jooq_generated.tables.DiagnosticResults;
 import jooq_generated.tables.Questions;
@@ -22,6 +23,11 @@ public class Tables {
      * The table <code>public.clients</code>.
      */
     public static final Clients CLIENTS = Clients.CLIENTS;
+
+    /**
+     * The table <code>public.clients_summary</code>.
+     */
+    public static final ClientsSummary CLIENTS_SUMMARY = ClientsSummary.CLIENTS_SUMMARY;
 
     /**
      * The table <code>public.diagnostic</code>.

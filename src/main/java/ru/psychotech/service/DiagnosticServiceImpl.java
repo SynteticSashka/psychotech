@@ -7,6 +7,7 @@ import ru.psychotech.mapper.DiagnosticMapper;
 import ru.psychotech.model.diagnistic.DiagnosticResult;
 import ru.psychotech.model.diagnistic.DiagnosticAnswers;
 import ru.psychotech.model.diagnistic.DiagnosticDto;
+import ru.psychotech.repository.ClientSummaryRepository;
 import ru.psychotech.repository.DiagnosticRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,13 +16,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DiagnosticServiceImpl implements DiagnosticService {
   private final AccentuationCalculator accentuationCalculator;
-  private final DiagnosticRepository repository;
+  private final DiagnosticRepository diagnosticRepository;
+  private final ClientSummaryRepository summaryRepository;
   private final DiagnosticMapper mapper;
 
   @Override
   public List<DiagnosticDto> getCompleted(Long clientId) {
-    List<Long> completed = repository.getCompleted(clientId);
-    List<DiagnosticDto> all = mapper.mapDiagnosticList(repository.getDiagnosticList());
+    List<Long> completed = diagnosticRepository.getCompleted(clientId);
+    List<DiagnosticDto> all = mapper.mapDiagnosticList(diagnosticRepository.getDiagnosticList());
     return all
         .stream()
         .filter(d -> completed.contains(d.getId()))
@@ -30,8 +32,8 @@ public class DiagnosticServiceImpl implements DiagnosticService {
 
   @Override
   public List<DiagnosticDto> getAvailable(Long clientId) {
-    List<Long> completed = repository.getCompleted(clientId);
-    List<DiagnosticDto> all = mapper.mapDiagnosticList(repository.getDiagnosticList());
+    List<Long> completed = diagnosticRepository.getCompleted(clientId);
+    List<DiagnosticDto> all = mapper.mapDiagnosticList(diagnosticRepository.getDiagnosticList());
     return all
         .stream()
         .filter(d -> !completed.contains(d.getId()))
@@ -49,12 +51,12 @@ public class DiagnosticServiceImpl implements DiagnosticService {
 
   @Override
   public DiagnosticDto getDiagnostic(Long id) {
-    var diagnostic = repository.getDiagnostic(id);
+    var diagnostic = diagnosticRepository.getDiagnostic(id);
     if (diagnostic.isEmpty()) {
       return null;
     } else {
       return mapper.mapDiagnosticWithQuestions(diagnostic.get(),
-          repository.getQuestions(id));
+          diagnosticRepository.getQuestions(id));
     }
   }
 
@@ -67,6 +69,7 @@ public class DiagnosticServiceImpl implements DiagnosticService {
 
   @Override
   public void clearResults(Long clientId, Long diagnosticId) {
-    repository.clearResults(clientId, diagnosticId);
+    diagnosticRepository.clearResults(clientId, diagnosticId);
+    summaryRepository.clearSummary(clientId, diagnosticId);
   }
 }

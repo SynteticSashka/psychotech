@@ -7,15 +7,11 @@ import static jooq_generated.Tables.RECOMMENDATIONS;
 import static jooq_generated.Tables.SCALES;
 
 import jooq_generated.tables.pojos.Diagnostic;
-import jooq_generated.tables.pojos.Recommendations;
 import jooq_generated.tables.pojos.Scales;
 import jooq_generated.tables.pojos.DiagnosticResults;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,7 +44,7 @@ public class DiagnosticRepository {
             DIAGNOSTIC_RESULTS.CLIENT_ID.eq(clientId),
             DIAGNOSTIC_RESULTS.DIAGNOSTIC_ID.eq(diagnosticId)
         ).execute();
-  }
+}
 
   public Optional<Diagnostic> getDiagnostic(Long id) {
     return this.dslContext.selectFrom(DIAGNOSTIC)

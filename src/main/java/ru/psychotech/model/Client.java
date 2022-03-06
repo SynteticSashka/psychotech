@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.psychotech.model.client.Gender;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +21,7 @@ public class Client implements UserDetails {
   private String email;
   private String password;
   private Role role;
-
+  private Gender gender;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

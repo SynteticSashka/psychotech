@@ -1,6 +1,7 @@
 package ru.psychotech.service;
 
 import ru.psychotech.model.client.ClientDto;
+import ru.psychotech.model.client.ClientSummaryDto;
 import ru.psychotech.model.client.EditClient;
 import ru.psychotech.model.client.NewClient;
 
@@ -10,6 +11,8 @@ public interface ClientService {
   List<ClientDto> getClients();
 
   ClientDto getClient(Long id);
+
+  ClientSummaryDto getClientSummary(Long id);
 
   ClientDto create(NewClient client);
 

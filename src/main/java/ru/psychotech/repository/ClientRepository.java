@@ -1,12 +1,14 @@
 package ru.psychotech.repository;
 
 import static jooq_generated.tables.Clients.CLIENTS;
+import static jooq_generated.tables.ClientsSummary.CLIENTS_SUMMARY;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.psychotech.model.Client;
+import ru.psychotech.model.client.ClientSummaryDto;
 import ru.psychotech.model.client.EditClient;
 import ru.psychotech.model.client.NewClient;
 
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class ClientRepository {
   private final DSLContext dslContext;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
 
   public List<Client> getList() {
     return dslContext.selectFrom(CLIENTS)
@@ -81,21 +85,29 @@ public class ClientRepository {
 
     client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
 
-    return dslContext.insertInto(CLIENTS)
+    var result = dslContext.insertInto(CLIENTS)
         .columns(
             CLIENTS.NAME,
             CLIENTS.LASTNAME,
             CLIENTS.EMAIL,
-            CLIENTS.PASSWORD
+            CLIENTS.PASSWORD,
+            CLIENTS.GENDER
         )
         .values(
             client.getName(),
             client.getLastname(),
             client.getEmail(),
-            client.getPassword())
+            client.getPassword(),
+            client.getGender().toString()
+        )
         .returning()
         .fetchOptional()
         .map(r -> r.into(Client.class));
+
+    result.ifPresent(value -> this.dslContext.insertInto(CLIENTS_SUMMARY)
+        .columns(CLIENTS_SUMMARY.CLIENT_ID).values(value.getId()).execute());
+
+    return result;
   }
 
   public void delete(Long id) {
